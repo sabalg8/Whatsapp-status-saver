@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Status Saver</string>
+    <string name="no_status">No Status Found</string>
+    <string name="status_found_text">Status Found : </string>
+    <string name="descriptiona">Status</string>
+    <string name="what_does">Save All Your Status Easily</string>
+    <string name="open_Setting">Open Settings</string>
+    <string name="sett_name">Settings</string>
+    <string name="share_1">Share Status</string>
+    <string name="why_dialogue">This app requires storage permission to save status . Please enable the permission to access this feature.</string>
+    <string name="STEP1">Step 1 : Open status </string>
+    <string name="STEP2">Step 2 : Watch The Status Completely.</string>
+    <string name="STEP3">Step 3 : Come Back to app and check</string>
+    <string name="Download">Download Status</string>
+    <string name="photo_status">photo status</string>
+    <string name="video_status">Video Status</string>
+    <string name="how_use">How to Use ?</string>
+    <string name="Setting">Settings\n</string>
+    <string name="ok">done</string>
+    <string name="delete">Delete\n</string>
+    <string name="save">save status\n</string>
+    <string name="select_all">select all</string>
+    <string name="developer_name">Developed by :sabalApps</string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--    menu.xml-->
+    <item
+        android:id="@+id/buy_premium"
+        android:icon="@drawable/premium_logo"
+        android:title="@string/how_use"
+        android:contentDescription="@string/how_use"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/setting_svgrepo_com"
+        android:contentDescription="@string/open_Setting"
+        android:title="@string/open_Setting"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/how_use"
+        android:icon="@drawable/question_mark"
+        android:title="@string/how_use"
+        android:contentDescription="@string/how_use"
+        app:showAsAction="always" />
+
+</menu>
