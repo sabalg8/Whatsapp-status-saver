@@ -12,10 +12,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.status_saver_app_all.databinding.ActivityMainBinding
@@ -26,12 +26,14 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
+
     companion object {
         private const val BACK_PRESS_TIME_INTERVAL = 2000
         private const val PREFS_NAME = "PREFS_NAME"
         private const val FIRST_TIME_KEY = "FIRST_TIME_KEY"
         private const val REQUEST_STORAGE_PERMISSION = 1
         private const val PAGE_SIZE = 20
+        private const val BUSINESS_STATUS_FOLDER_NAME = "Business Statuses"
     }
 
     private var backPressedOnce = false
@@ -40,10 +42,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: Adapter
     private var allStatusFiles: MutableList<File> = ArrayList()
     private lateinit var statusPath: String
+    private lateinit var businessStatusPath: String
     private lateinit var actionBar: ActionBar
 
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -73,59 +74,31 @@ class MainActivity : AppCompatActivity() {
             }, 1000)
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkStoragePermission()
-        }
+        checkStoragePermission()
         NotificationUtils.createNotificationChannel(this)
-
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun checkStoragePermission(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            // Check for MANAGE_EXTERNAL_STORAGE permission on Android 11 and above
-            if (Environment.isExternalStorageManager()) {
-                setupLayout()
-                true
-            } else {
-                showStoragePermissionDialog()
-                false
-            }
+    private fun checkStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            setupLayout()
         } else {
-            // Check for WRITE_EXTERNAL_STORAGE permission on Android versions below 11
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                setupLayout()
-                true
-            } else {
-                requestStoragePermission()
-                false
-            }
+            requestStoragePermission()
         }
     }
-    @RequiresApi(Build.VERSION_CODES.M)
+
     private fun requestStoragePermission() {
-        if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            // Show permission explanation dialog only if necessary
-            showPermissionExplanationDialog()
-        } else {
-            // Request the permission
-            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_STORAGE_PERMISSION)
-        }
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_STORAGE_PERMISSION)
     }
 
-    private fun showStoragePermissionDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Permission Required")
-        builder.setMessage("This app needs access to manage all files on your device.")
-        builder.setPositiveButton("Grant") { _, _ ->
-            val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-            intent.data = Uri.parse("package:$packageName")
-            startActivityForResult(intent, REQUEST_STORAGE_PERMISSION)
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_STORAGE_PERMISSION) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                setupLayout()
+            } else {
+                showToast("Permission denied. App cannot function without storage permission.")
+            }
         }
-        builder.setNegativeButton("Cancel") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.create().show()
     }
 
     private fun showPermissionExplanationDialog() {
@@ -140,28 +113,18 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_STORAGE_PERMISSION) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                setupLayout()
-            } else {
-                showToast("cannot show status")
-            }
+    private fun showStoragePermissionDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Permission Required")
+        builder.setMessage("This app needs access to manage all files on your device.")
+        builder.setPositiveButton("Grant") { _, _ ->
+            requestStoragePermission()
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_STORAGE_PERMISSION) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && Environment.isExternalStorageManager()) {
-                setupLayout()
-            } else {
-                showPermissionExplanationDialog()
-            }
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
         }
+        builder.create().show()
     }
-
 
     private fun openAppSettings() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
@@ -174,20 +137,19 @@ class MainActivity : AppCompatActivity() {
         fileObserver.stopWatching()
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onResume() {
         super.onResume()
         fileObserver.startWatching()
-        if (checkStoragePermission()) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             loadStatusFiles()
         }
     }
 
-
     private fun setupFileObserver() {
         statusPath = getStatusPath()
+        businessStatusPath = getBusinessStatusPath()
         Thread {
-            fileObserver = object : FileObserver(statusPath) {
+            fileObserver = object : FileObserver(statusPath, CREATE or DELETE) {
                 override fun onEvent(event: Int, path: String?) {
                     if (event == CREATE || event == DELETE) {
                         runOnUiThread { loadStatusFiles() }
@@ -195,14 +157,27 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             fileObserver.startWatching()
+
+            val businessFileObserver = object : FileObserver(businessStatusPath, CREATE or DELETE) {
+                override fun onEvent(event: Int, path: String?) {
+                    if (event == CREATE || event == DELETE) {
+                        runOnUiThread { loadStatusFiles() }
+                    }
+                }
+            }
+            businessFileObserver.startWatching()
         }.start()
     }
 
     private fun loadStatusFiles() {
         CoroutineScope(Dispatchers.Main).launch {
             val newStatusFiles = withContext(Dispatchers.IO) {
-                val statusFiles = getStatusFiles()
-                statusFiles?.filterNot { it.isDirectory || it.name.endsWith(".nomedia") }?.toMutableList() ?: mutableListOf()
+                val personalStatusFiles = getStatusFiles(statusPath)
+                val businessStatusFiles = getStatusFiles(businessStatusPath)
+                val allFiles = mutableListOf<File>()
+                personalStatusFiles?.let { allFiles.addAll(it) }
+                businessStatusFiles?.let { allFiles.addAll(it) }
+                allFiles.filterNot { it.isDirectory || it.name.endsWith(".nomedia") }.toMutableList()
             }
 
             allStatusFiles.clear()
@@ -222,6 +197,9 @@ class MainActivity : AppCompatActivity() {
             if (startIndex == 0 && adapter.itemCount > 0) {
                 binding.idTVMsg.visibility = View.GONE
                 binding.howToUse.visibility = View.GONE
+            } else {
+                binding.idTVMsg.visibility = View.VISIBLE
+                binding.howToUse.visibility = View.VISIBLE
             }
             updateStatusCount()
         }
@@ -232,8 +210,6 @@ class MainActivity : AppCompatActivity() {
         actionBar.subtitle = "$statsFound${allStatusFiles.size}"
     }
 
-
-
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
@@ -243,16 +219,10 @@ class MainActivity : AppCompatActivity() {
         val staggeredGridLayoutManager = StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager = staggeredGridLayoutManager
         loadStatusFiles()
-        if (allStatusFiles.isEmpty()) {
-            binding.idTVMsg.visibility = View.VISIBLE
-            binding.howToUse.visibility=View.VISIBLE
-        } else {
-            binding.idTVMsg.visibility = View.GONE
-        }
     }
 
-    private fun getStatusFiles(): Array<File>? {
-        val statusFolder = getStatusFolder()
+    private fun getStatusFiles(path: String): Array<File>? {
+        val statusFolder = File(path)
         return if (statusFolder.exists() && statusFolder.isDirectory) {
             statusFolder.listFiles { file ->
                 !file.isDirectory && !file.name.endsWith(".nomedia")
@@ -268,8 +238,10 @@ class MainActivity : AppCompatActivity() {
         return statusFolder.absolutePath
     }
 
-    private fun getStatusFolder(): File {
-        return File(getStatusPath())
+    private fun getBusinessStatusPath(): String {
+        val externalStorageDir = Environment.getExternalStorageDirectory()
+        val businessStatusFolder = File(externalStorageDir, BUSINESS_STATUS_FOLDER_NAME)
+        return businessStatusFolder.absolutePath
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

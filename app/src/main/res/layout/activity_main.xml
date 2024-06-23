@@ -3,6 +3,7 @@
     android:layout_height="match_parent"
     android:background="@color/app_bg"
     android:fitsSystemWindows="true">
+<!--    activity_main.xml-->
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
