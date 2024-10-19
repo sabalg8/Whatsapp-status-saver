@@ -17,10 +17,10 @@
         android:layout_margin="5dp">
 
         <ImageView
-            android:id="@+id/thumbnailofstatus"
+            android:id="@+id/thumbnail_of_status"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:contentDescription="@string/descriptiona"
+            android:contentDescription="@string/descriptions_app"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true" />
 

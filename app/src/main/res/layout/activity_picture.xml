@@ -6,9 +6,7 @@
     tools:context=".Picture">
 
     <!-- activity_picture.xml -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <com.jsibbold.zoomage.ZoomageView
             android:id="@+id/particularimage"
@@ -38,6 +36,7 @@
                     android:id="@+id/download12"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:contentDescription="@string/Download"
                     android:src="@drawable/download_logo"
                     android:layout_margin="3dp" />
 
@@ -45,11 +44,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/Download"
-                    android:textColor="@color/action_col"
+                    android:textColor="@color/divider_color"
                     android:textSize="16sp"
                     android:textAlignment="center" />
             </LinearLayout>
-
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/divider_color" />
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -61,6 +63,7 @@
                     android:id="@+id/sharebtn2"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    android:contentDescription="@string/share_1"
                     android:src="@drawable/share"
                     android:layout_margin="3dp"/>
 
@@ -68,12 +71,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/share_1"
-                    android:textColor="@color/action_col"
+                    android:textColor="@color/divider_color"
                     android:textSize="16sp"
                     android:textAlignment="center" />
             </LinearLayout>
         </LinearLayout>
 
     </RelativeLayout>
-
-</RelativeLayout>

@@ -1,16 +1,13 @@
-package com.example.status_saver_app_all
+package com.example.status_saver_app
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.status_saver_app_all.databinding.ActivityVideoBinding
-import com.example.status_saver_app_all.utils.FileUtilsx
+import com.example.status_saver_app.databinding.ActivityVideoBinding
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
 import java.io.File
-
-
 class Video : AppCompatActivity() {
     private lateinit var binding: ActivityVideoBinding
     private lateinit var destPath: String

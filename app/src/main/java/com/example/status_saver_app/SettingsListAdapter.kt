@@ -1,11 +1,11 @@
-package com.example.status_saver_app_all
+package com.example.status_saver_app
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import com.example.status_saver_app_all.databinding.SettingsListItemBinding
+import com.example.status_saver_app.databinding.SettingsListItemBinding
 
 class SettingsListAdapter(context: Context, private val settingsList: Array<String>, private val settingsIconList: Array<Int>) :
     ArrayAdapter<String>(context, R.layout.settings_list_item, settingsList) {

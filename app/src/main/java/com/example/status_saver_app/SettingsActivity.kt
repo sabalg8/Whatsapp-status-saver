@@ -1,4 +1,4 @@
-package com.example.status_saver_app_all
+package com.example.status_saver_app
 import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.RatingBar
 import androidx.appcompat.app.AppCompatActivity
-import com.example.status_saver_app_all.databinding.ActivitySettingsBinding
+import com.example.status_saver_app.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {
 

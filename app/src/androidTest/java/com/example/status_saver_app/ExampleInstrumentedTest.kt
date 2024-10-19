@@ -1,4 +1,4 @@
-package com.example.status_saver_app_all
+package com.example.status_saver_app
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

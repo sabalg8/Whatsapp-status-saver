@@ -4,15 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00FFFFFF"
     tools:context=".Video">
 
 <!--    activity_video.xml-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp"
-        android:background="#A59B9B">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,8 +20,7 @@
                 android:layout_width="match_parent"
                 android:contentDescription="@string/video_status"
                 android:layout_height="match_parent"
-                app:resize_mode="fit"
-                app:show_timeout="0" />
+                app:resize_mode="fit"/>
 
 
         </RelativeLayout>
@@ -42,7 +35,7 @@
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/divider_color" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -55,6 +48,7 @@
                     android:id="@+id/download12"
                     android:layout_width="150dp"
                     android:layout_height="100dp"
+                    android:contentDescription="@string/Download"
                     android:src="@drawable/download_logo"
                     android:layout_margin="3dp" />
 
@@ -62,14 +56,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/Download"
-                    android:textColor="@color/white"
+                    android:textColor="@color/divider_color"
                     android:textSize="20sp" />
             </LinearLayout>
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/divider_color" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -82,6 +76,8 @@
                     android:id="@+id/sharebtn2"
                     android:layout_width="150dp"
                     android:layout_height="100dp"
+                    android:importantForAccessibility="no"
+                    android:contentDescription="@string/share_1"
                     android:src="@drawable/share"
                     android:layout_margin="5dp" />
 
@@ -89,15 +85,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/share_1"
-                    android:textColor="@color/white"
+                    android:textColor="@color/divider_color"
                     android:textSize="20sp" />
             </LinearLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@android:color/darker_gray" />
         </LinearLayout>
     </RelativeLayout>
-
-</RelativeLayout>

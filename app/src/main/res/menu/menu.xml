@@ -6,7 +6,7 @@
     <item
         android:id="@+id/buy_premium"
         android:icon="@drawable/premium_logo"
-        android:title="@string/how_use"
+        android:title="@string/premium_buy"
         android:contentDescription="@string/how_use"
         app:showAsAction="always" />
 

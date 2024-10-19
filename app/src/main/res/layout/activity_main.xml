@@ -1,15 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg"
-    android:fitsSystemWindows="true">
+    android:background="@color/app_bg">
 <!--    activity_main.xml-->
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe"
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -24,13 +23,13 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="@string/no_status"
-        android:textColor="@color/white"
-        android:textSize="50sp"
+        android:textColor="@color/divider_color"
+        android:textSize="40sp"
         android:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/how_to_use"
-        android:layout_width="290dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/idTVMsg"
         android:layout_centerHorizontal="true"
@@ -38,6 +37,7 @@
         android:background="@drawable/buttonshape"
         android:text="@string/how_use"
         android:textAllCaps="false"
-        android:textSize="40sp" />
+        android:textColor="@color/divider_color"
+        android:textSize="25sp" />
 
 </RelativeLayout>

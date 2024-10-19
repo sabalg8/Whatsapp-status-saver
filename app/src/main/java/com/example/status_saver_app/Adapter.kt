@@ -1,5 +1,4 @@
-package com.example.status_saver_app_all
-
+package com.example.status_saver_app
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -17,11 +16,9 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.example.status_saver_app_all.databinding.ItemLayoutBinding
-import com.example.status_saver_app_all.utils.FileUtilsx
+import com.example.status_saver_app.databinding.ItemLayoutBinding
 import java.io.File
 import java.io.IOException
-
 class Adapter(private val context: Context, private val filesList: ArrayList<ModelClass>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
 
     private val selectedItems = mutableListOf<ModelClass>()
@@ -67,7 +64,7 @@ class Adapter(private val context: Context, private val filesList: ArrayList<Mod
                     return false
                 }
             })
-            .into(holder.binding.thumbnailofstatus)
+            .into(holder.binding.thumbnailOfStatus)
 
         holder.binding.checkBox.visibility = if (showCheckboxes) View.VISIBLE else View.GONE
         holder.binding.checkBox.setOnCheckedChangeListener(null)

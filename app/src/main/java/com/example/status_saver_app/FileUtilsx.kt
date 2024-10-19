@@ -1,4 +1,4 @@
-package com.example.status_saver_app_all.utils
+package com.example.status_saver_app
 
 import android.content.Context
 import android.content.Intent
@@ -10,7 +10,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
-
+//handles downloading and sharing opearation
 object FileUtilsx {
 
     fun saveFile(context: Context, sourceFile: File, destFolderName: String, filename: String): File? {

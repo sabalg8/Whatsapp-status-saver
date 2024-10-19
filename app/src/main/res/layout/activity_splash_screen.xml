@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg"
+    android:background="@color/setting_splash"
     tools:context=".SplashScreen">
 
     <ImageView
@@ -12,6 +12,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_centerInParent="true"
+        android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         android:src="@drawable/newapp_logo" />
 
@@ -24,14 +25,16 @@
         android:layout_marginTop="40dp" />
 
     <TextView
+        android:id="@+id/app_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="@color/divider_color"
-        android:textStyle="bold"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:textStyle="normal"
         android:layout_below="@id/progress_bar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:text="@string/what_does" />
+
 
 </RelativeLayout>

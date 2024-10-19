@@ -1,12 +1,10 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
     <style name="Theme.Whatsapp_status_saver" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/Teal_BG</item>
-        <item name="android:statusBarColor" >@color/setting_splash</item>
+        <item name="android:statusBarColor">@color/setting_splash</item>
         <item name="fontFamily">@font/app_font</item>
         <item name="android:indeterminateTint">@color/white</item>
     </style>
-
-
-
 </resources>

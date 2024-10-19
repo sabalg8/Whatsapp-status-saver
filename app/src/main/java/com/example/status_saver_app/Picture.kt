@@ -1,5 +1,4 @@
-package com.example.status_saver_app_all
-
+package com.example.status_saver_app
 import android.app.Dialog
 
 import android.net.Uri
@@ -8,10 +7,8 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.status_saver_app_all.databinding.ActivityPictureBinding
-import com.example.status_saver_app_all.utils.FileUtilsx
+import com.example.status_saver_app.databinding.ActivityPictureBinding
 import java.io.File
-
 class Picture : AppCompatActivity() {
     private lateinit var binding: ActivityPictureBinding
     private lateinit var pictureUri: Uri
